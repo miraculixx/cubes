@@ -439,6 +439,7 @@ class MongoBrowser(AggregationBrowser):
 
         result_items = []
         self.logger.debug("PIPELINE: %s", json.dumps(pipeline))
+        print pipeline
         
         results = self.data_store.aggregate(pipeline)
         # backwards compatibility

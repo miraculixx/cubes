@@ -3,7 +3,12 @@
 from __future__ import absolute_import
 
 from collections import namedtuple
+
+from cubes.backends.sql.functions import avg
+from django.db.models.aggregates import StdDev, Avg, Min, Max
+
 from ...errors import *
+
 
 try:
     import sqlalchemy
@@ -34,6 +39,22 @@ _aggregate_functions = {
     'sum': {
         'group_by': (lambda field: { '$sum': "$%s" % field }),
         'aggregate_fn': sum,
+    },
+    'avg': {
+        'group_by': (lambda field: { '$avg': "$%s" % field }),
+        'aggregate_fn': Avg,
+    },
+    'stddev': {
+        'group_by': (lambda field: { '$stdDevPop': "$%s" % field }),
+        'aggregate_fn': StdDev,
+    },
+    'min': {
+        'group_by': (lambda field: { '$min': "$%s" % field }),
+        'aggregate_fn': Min,
+    },
+    'max': {
+        'group_by': (lambda field: { '$max': "$%s" % field }),
+        'aggregate_fn': Max,
     },
     'first': {
         'group_by': (lambda field: { '$first': "$%s" % field }),
